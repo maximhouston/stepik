@@ -21,7 +21,7 @@ int main()
 	uint64_t size = 0;
 	uint64_t cnt_of_phys = 0;
 	ofstream fout("output.txt");
-	cout << "Ожидайте выполнение программы! (примерное время ожидания 64 секунды)";
+	cout << "РћР¶РёРґР°Р№С‚Рµ РІС‹РїРѕР»РЅРµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹! (РїСЂРёРјРµСЂРЅРѕРµ РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ 64 СЃРµРєСѓРЅРґС‹)";
 	input >> m >> q >> r;
 	uint64_t** paddr_array = new uint64_t*[m];
 
@@ -33,7 +33,7 @@ int main()
 			input >> paddr_array[i][j];
 		}
 	}
-	//Динамический массив логических адресов из файла
+	//Р”РёРЅР°РјРёС‡РµСЃРєРёР№ РјР°СЃСЃРёРІ Р»РѕРіРёС‡РµСЃРєРёС… Р°РґСЂРµСЃРѕРІ РёР· С„Р°Р№Р»Р°
 	uint64_t* logic_addr=new uint64_t[q];
 	for (uint64_t i = 0; i < q; i++) {
 		input >> logic_addr[i];
@@ -50,7 +50,7 @@ int main()
 		directory_ = 0;
 		size = 0;
 		cnt_of_phys = 0;
-		//Перевожу логический адрес в двоичный код
+		//РџРµСЂРµРІРѕР¶Сѓ Р»РѕРіРёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РІ РґРІРѕРёС‡РЅС‹Р№ РєРѕРґ
 		uint64_t logic = logic_addr[k];
 		for (int j = 0; logic != 0; j++) {
 			addr[j] = logic % 2;
@@ -60,7 +60,7 @@ int main()
 		for (int i = size; i < 64; i++) {
 			addr[i] = 0;
 		}
-		//Выделяю 9 бит соответствующие mpl4
+		//Р’С‹РґРµР»СЏСЋ 9 Р±РёС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ mpl4
 		for (int i = 39, j = 0; i <= 47; i++, j++) {
 			mpl4[j] = addr[i];
 		}
@@ -68,7 +68,7 @@ int main()
 			if (mpl4[i] == 1)
 				mpl4_ += pow(2, i);
 		}
-		//Нахожу значение и ищу его в таблице физических адресов
+		//РќР°С…РѕР¶Сѓ Р·РЅР°С‡РµРЅРёРµ Рё РёС‰Сѓ РµРіРѕ РІ С‚Р°Р±Р»РёС†Рµ С„РёР·РёС‡РµСЃРєРёС… Р°РґСЂРµСЃРѕРІ
 		physic = r + mpl4_ * 8;
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < 2; j++) {
@@ -82,7 +82,7 @@ int main()
 		if (cnt_of_phys == 0) {
 			cnt_fault++;
 		}
-		//Выделяю физический адрес из value
+		//Р’С‹РґРµР»СЏСЋ С„РёР·РёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РёР· value
 		int value_phys_addr[64];
 		if (value % 2 == 0) {
 			cnt_fault++;
@@ -107,7 +107,7 @@ int main()
 			if (value_phys_addr[i] == 1)
 				value_ += pow(2, i);
 		}
-		//Выделяю Directory_Ptr
+		//Р’С‹РґРµР»СЏСЋ Directory_Ptr
 		int directory_ptr[9];
 		directory_ptr_ = 0;
 		for (int i = 30, j = 0; i <= 38; i++, j++) {
@@ -117,7 +117,7 @@ int main()
 			if (directory_ptr[i] == 1)
 				directory_ptr_ += pow(2, i);
 		}
-		//Нахожу значение физического адреса т ищу его в таблице
+		//РќР°С…РѕР¶Сѓ Р·РЅР°С‡РµРЅРёРµ С„РёР·РёС‡РµСЃРєРѕРіРѕ Р°РґСЂРµСЃР° С‚ РёС‰Сѓ РµРіРѕ РІ С‚Р°Р±Р»РёС†Рµ
 		physic = value_ + directory_ptr_ * 8;
 		cnt_of_phys = 0;
 		for (int i = 0; i < m; i++) {
@@ -132,7 +132,7 @@ int main()
 		if (cnt_of_phys == 0) {
 			cnt_fault++;
 		}
-		//Выделяю физический адрес из value
+		//Р’С‹РґРµР»СЏСЋ С„РёР·РёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РёР· value
 		if (value % 2 == 0) {
 			cnt_fault++;
 		}
@@ -151,9 +151,9 @@ int main()
 				value_phys_addr[i] = 0;
 			}
 		}
-		//Выделяю directory
+		//Р’С‹РґРµР»СЏСЋ directory
 		value_ = 0;
-		//Выделяю физический адрес из value
+		//Р’С‹РґРµР»СЏСЋ С„РёР·РёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РёР· value
 		for (int i = 12; i < 52; i++) {
 			if (value_phys_addr[i] == 1)
 				value_ += pow(2, i);
@@ -182,7 +182,7 @@ int main()
 		if (cnt_of_phys == 0) {
 			cnt_fault++;
 		}
-		//Выделяю физический адрес из value
+		//Р’С‹РґРµР»СЏСЋ С„РёР·РёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РёР· value
 		if (value % 2 == 0) {
 			cnt_fault++;
 		}
@@ -206,7 +206,7 @@ int main()
 			if (value_phys_addr[i] == 1)
 				value_ += pow(2, i);
 		}
-		//Извлекаю table_ptr
+		//РР·РІР»РµРєР°СЋ table_ptr
 		int table[10];
 		table_ = 0;
 		for (int i = 12, j = 0; i <= 20; i++, j++) {
@@ -249,14 +249,14 @@ int main()
 				value_phys_addr[i] = 0;
 			}
 		}
-		//Выделяю физический адрес из value
+		//Р’С‹РґРµР»СЏСЋ С„РёР·РёС‡РµСЃРєРёР№ Р°РґСЂРµСЃ РёР· value
 		value_ = 0;
 		for (int i = 12; i < 52; i++) {
 			if (value_phys_addr[i] == 1)
 				value_ += pow(2, i);
 		}
 		int offset[12];
-		//Нахожу offset
+		//РќР°С…РѕР¶Сѓ offset
 		offset_ = 0;
 		for (int i = 0; i < 12; i++) {
 			offset[i] = addr[i];
